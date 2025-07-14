@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SkinApi.Data;
+using SkinApi.DTOs;
+using SkinApi.Models;
 
 namespace SkinApi.Controllers;
 
@@ -17,6 +19,18 @@ public class ChampionController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        return Ok(await _context.Champions.ToListAsync());
+        var champions = await _context.Champions.OrderBy(c => c.Name).Include(c => c.Skins).ToListAsync();
+        var championWithSkins = new List<ChampionWithSkinDTO>();
+        foreach (var champion in champions)
+        {
+            championWithSkins.Add(new ChampionWithSkinDTO
+            {
+                Id = champion.Id,
+                Name = champion.Name,
+                NumberOfSkins = champion.Skins.Count,
+                BestSkin = champion.Skins.OrderBy(s => s.Rarity).FirstOrDefault()
+            });
+        }
+        return Ok(championWithSkins);
     }
 }
