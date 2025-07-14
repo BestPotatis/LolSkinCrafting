@@ -17,7 +17,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { ValueMap } from "@/types/general";
-import { Input } from "./input";
 
 interface ComboboxProps {
   placeholder: string;
@@ -57,9 +56,9 @@ export function Combobox({
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
-                  value={option.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                  value={option.label}
+                  onSelect={() => {
+                    setValue(option.value);
                     setOpen(false);
                   }}
                 >
