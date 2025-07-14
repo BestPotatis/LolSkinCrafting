@@ -16,6 +16,6 @@ export const ChampionColumns: ColumnDef<ChampionWithSkin>[] = [
   },
   {
     header: "Best skin",
-    accessorFn: (row) => row.bestSkin?.rarity,
+    accessorFn: (row) => row.bestSkin?.name,
   },
 ];
