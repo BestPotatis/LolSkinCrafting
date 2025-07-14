@@ -15,4 +15,6 @@ public class DataContext : DbContext
     }
 
     public DbSet<Champion> Champions { get; set; }
+    public DbSet<Skin> Skins { get; set; }
+
 }
