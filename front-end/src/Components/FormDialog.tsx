@@ -46,7 +46,7 @@ export function FormDialog<TData extends FieldValues>({
           <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(submitFn)}>
-          {dialogForm}
+          <div className="grid gap-2">{dialogForm}</div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
