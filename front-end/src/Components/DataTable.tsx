@@ -12,13 +12,18 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import type { JSX } from "react";
 
 interface DataTableProps<TData, TValue> {
+  title: string;
+  tableButtons?: JSX.Element;
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
 function DataTable<TData, TValue>({
+  title,
+  tableButtons,
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -30,6 +35,10 @@ function DataTable<TData, TValue>({
 
   return (
     <div className="rounded-md border">
+      <div className="flex justify-between">
+        <div className="text-3xl font-semibold">{title}</div>
+        <div className="flex gap-2">{tableButtons}</div>
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
