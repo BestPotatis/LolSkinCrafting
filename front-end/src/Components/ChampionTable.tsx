@@ -55,33 +55,32 @@ export function ChampionTable() {
 
   return (
     <>
-      {championData && (
-        <DataTable
-          title="Champions"
-          tableButtons={
-            championOptions && (
-              <FormDialog
-                open={open}
-                setOpen={setOpen}
-                buttonText="Add Skin"
-                dialogForm={
-                  <CreateSkinForm
-                    championOptions={championOptions}
-                    submitForm={submitForm}
-                  />
-                }
-                title="Add new skin"
-                description="Add a new skin for a champion with name and rarity"
-                submitForm={submitForm}
-                submitText="Add skin"
-                submitFn={(data) => addSkinMutation.mutate(data)}
-              />
-            )
-          }
-          data={championData}
-          columns={columns}
-        />
-      )}
+      <DataTable
+        title="Champions"
+        tableButtons={
+          championOptions && (
+            <FormDialog
+              open={open}
+              setOpen={setOpen}
+              buttonText="Add Skin"
+              dialogForm={
+                <CreateSkinForm
+                  championOptions={championOptions}
+                  submitForm={submitForm}
+                />
+              }
+              title="Add new skin"
+              description="Add a new skin for a champion with name and rarity"
+              submitForm={submitForm}
+              submitText="Add skin"
+              submitFn={(data) => addSkinMutation.mutate(data)}
+            />
+          )
+        }
+        data={championData}
+        columns={columns}
+      />
+
       <ToastContainer />
     </>
   );

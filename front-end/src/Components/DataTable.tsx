@@ -18,7 +18,7 @@ interface DataTableProps<TData, TValue> {
   title: string;
   tableButtons?: JSX.Element;
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data?: TData[];
 }
 
 function DataTable<TData, TValue>({
@@ -28,7 +28,7 @@ function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
-    data,
+    data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
