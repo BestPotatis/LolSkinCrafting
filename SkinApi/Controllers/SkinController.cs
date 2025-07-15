@@ -19,11 +19,14 @@ public class SkinController : ControllerBase
 
     [HttpPost]
     [Route("create")]
-    public async void Store(CreateSkinDTO request)
+    public async Task<IActionResult> Store([FromBody] CreateSkinDTO request)
     {
-        Console.WriteLine(request);
-        var newSkin = new Skin { Name = request.Name, ChampionId = request.ChampionId, Rarity = request.Rarity };
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var newSkin = new Skin { Name = request.Name, Legacy = request.Legacy, ChampionId = request.ChampionId!.Value, Rarity = request.Rarity!.Value };
         _context.Skins.Add(newSkin);
-        await _context.SaveChangesAsync();
+        return Ok(await _context.SaveChangesAsync());
     }
 }
