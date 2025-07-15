@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+import { useState, type JSX, type SetStateAction } from "react";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -20,6 +20,8 @@ import {
 import { DialogDescription } from "@radix-ui/react-dialog";
 
 interface FormDialogProps<TData extends FieldValues> {
+  open: boolean;
+  setOpen: (open: boolean) => void;
   buttonText: string;
   title: string;
   description: string;
@@ -30,6 +32,8 @@ interface FormDialogProps<TData extends FieldValues> {
 }
 
 export function FormDialog<TData extends FieldValues>({
+  open,
+  setOpen,
   buttonText,
   title,
   description,
@@ -39,8 +43,9 @@ export function FormDialog<TData extends FieldValues>({
   submitFn,
 }: FormDialogProps<TData>) {
   const { handleSubmit } = submitForm;
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>{buttonText}</Button>
       </DialogTrigger>

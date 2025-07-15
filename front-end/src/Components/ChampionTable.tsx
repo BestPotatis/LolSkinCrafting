@@ -11,7 +11,7 @@ import type {
 import { FormDialog } from "./FormDialog";
 import { useForm } from "react-hook-form";
 import { CreateSkinForm } from "./Forms/CreateSkinForm";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export function ChampionTable() {
   const columns = ChampionColumns;
@@ -33,9 +33,14 @@ export function ChampionTable() {
   const addSkinMutation = useMutation({
     mutationFn: (data: CreateChampion) =>
       axios.post(BASE_URL + "/skins/create", data),
+    onSuccess: () => {
+      setOpen(false);
+    },
   });
 
   const submitForm = useForm<CreateSkin>();
+
+  const [open, setOpen] = useState(false);
 
   return (
     championData && (
@@ -44,6 +49,8 @@ export function ChampionTable() {
         tableButtons={
           championOptions && (
             <FormDialog
+              open={open}
+              setOpen={setOpen}
               buttonText="Add Skin"
               dialogForm={
                 <CreateSkinForm
