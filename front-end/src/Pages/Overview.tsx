@@ -1,9 +1,11 @@
 import { ChampionTable } from "@/Components/ChampionTable";
+import { SkinShardTable } from "@/Components/SkinShardTable";
 
 const Overview = () => {
   return (
-    <div>
+    <div className="flex justify-between p-4">
       <ChampionTable />
+      <SkinShardTable />
     </div>
   );
 };
