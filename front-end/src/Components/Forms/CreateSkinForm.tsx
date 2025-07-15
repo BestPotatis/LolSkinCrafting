@@ -3,6 +3,8 @@ import { Input } from "../ui/input";
 import type { CreateSkin } from "@/types/champion";
 import { Combobox } from "../ui/combobox";
 import type { ValueMap } from "@/types/general";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 
 interface CreateSkinFormProps {
   championOptions: ValueMap[];
@@ -45,17 +47,29 @@ export function CreateSkinForm({
       <Controller
         name="championId"
         control={control}
-        render={({ field }) => {
-          return (
-            <Combobox
-              value={field.value}
-              setValue={field.onChange}
-              options={championOptions}
-              placeholder="Select champion"
-            />
-          );
-        }}
+        render={({ field }) => (
+          <Combobox
+            value={field.value}
+            setValue={field.onChange}
+            options={championOptions}
+            placeholder="Select champion"
+          />
+        )}
       />
+      <div className="pl-2 flex items-center space-x-2">
+        <Controller
+          name="legacy"
+          control={control}
+          render={({ field }) => (
+            <Checkbox
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              defaultChecked={false}
+            />
+          )}
+        />
+        <Label>Legacy</Label>
+      </div>
     </>
   );
 }

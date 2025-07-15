@@ -26,6 +26,7 @@ export interface CreateSkin {
   championId: number;
   name: string;
   rarity: number;
+  legacy: boolean;
 }
 
 export type CreateChampion = {

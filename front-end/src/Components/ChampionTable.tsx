@@ -40,7 +40,7 @@ export function ChampionTable() {
   const successToast = () =>
     toast.success("Successfully created skin", { position: "bottom-right" });
   const addSkinMutation = useMutation({
-    mutationFn: (data: CreateChampion) =>
+    mutationFn: (data: CreateSkin) =>
       axios.post(BASE_URL + "/skins/create", data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["champions"] });
