@@ -1,4 +1,9 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import DataTable from "./DataTable";
 import axios from "axios";
 import { BASE_URL } from "@/constants";
@@ -15,6 +20,7 @@ import { useMemo, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
 export function ChampionTable() {
+  const queryClient = useQueryClient();
   const columns = ChampionColumns;
   const { data: championData } = useQuery({
     queryKey: ["champions"],
@@ -37,6 +43,7 @@ export function ChampionTable() {
     mutationFn: (data: CreateChampion) =>
       axios.post(BASE_URL + "/skins/create", data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["champions"] });
       setOpen(false);
       successToast();
     },
