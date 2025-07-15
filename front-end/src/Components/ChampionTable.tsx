@@ -12,6 +12,7 @@ import { FormDialog } from "./FormDialog";
 import { useForm } from "react-hook-form";
 import { CreateSkinForm } from "./Forms/CreateSkinForm";
 import { useMemo, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 export function ChampionTable() {
   const columns = ChampionColumns;
@@ -30,11 +31,14 @@ export function ChampionTable() {
     [championData]
   );
 
+  const successToast = () =>
+    toast.success("Successfully created skin", { position: "bottom-right" });
   const addSkinMutation = useMutation({
     mutationFn: (data: CreateChampion) =>
       axios.post(BASE_URL + "/skins/create", data),
     onSuccess: () => {
       setOpen(false);
+      successToast();
     },
   });
 
@@ -43,32 +47,35 @@ export function ChampionTable() {
   const [open, setOpen] = useState(false);
 
   return (
-    championData && (
-      <DataTable
-        title="Champions"
-        tableButtons={
-          championOptions && (
-            <FormDialog
-              open={open}
-              setOpen={setOpen}
-              buttonText="Add Skin"
-              dialogForm={
-                <CreateSkinForm
-                  championOptions={championOptions}
-                  submitForm={submitForm}
-                />
-              }
-              title="Add new skin"
-              description="Add a new skin for a champion with name and rarity"
-              submitForm={submitForm}
-              submitText="Add skin"
-              submitFn={(data) => addSkinMutation.mutate(data)}
-            />
-          )
-        }
-        data={championData}
-        columns={columns}
-      />
-    )
+    <>
+      {championData && (
+        <DataTable
+          title="Champions"
+          tableButtons={
+            championOptions && (
+              <FormDialog
+                open={open}
+                setOpen={setOpen}
+                buttonText="Add Skin"
+                dialogForm={
+                  <CreateSkinForm
+                    championOptions={championOptions}
+                    submitForm={submitForm}
+                  />
+                }
+                title="Add new skin"
+                description="Add a new skin for a champion with name and rarity"
+                submitForm={submitForm}
+                submitText="Add skin"
+                submitFn={(data) => addSkinMutation.mutate(data)}
+              />
+            )
+          }
+          data={championData}
+          columns={columns}
+        />
+      )}
+      <ToastContainer />
+    </>
   );
 }
