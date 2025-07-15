@@ -51,7 +51,8 @@ export function ChampionTable() {
                   submitForm={submitForm}
                 />
               }
-              dialogTitle="Add new skin"
+              title="Add new skin"
+              description="Add a new skin for a champion with name and rarity"
               submitForm={submitForm}
               submitText="Add skin"
               submitFn={(data) => addSkinMutation.mutate(data)}

@@ -17,10 +17,12 @@ import {
   type SubmitHandler,
   type UseFormReturn,
 } from "react-hook-form";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 interface FormDialogProps<TData extends FieldValues> {
   buttonText: string;
-  dialogTitle: string;
+  title: string;
+  description: string;
   dialogForm: JSX.Element;
   submitForm: UseFormReturn<TData, any, TData>;
   submitText?: string;
@@ -29,7 +31,8 @@ interface FormDialogProps<TData extends FieldValues> {
 
 export function FormDialog<TData extends FieldValues>({
   buttonText,
-  dialogTitle,
+  title,
+  description,
   dialogForm,
   submitForm,
   submitText,
@@ -43,7 +46,8 @@ export function FormDialog<TData extends FieldValues>({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{dialogTitle}</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(submitFn)}>
           <div className="grid gap-2">{dialogForm}</div>
