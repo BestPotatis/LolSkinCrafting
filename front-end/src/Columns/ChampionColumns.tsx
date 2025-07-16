@@ -1,4 +1,4 @@
-import type { Champion, ChampionWithSkin } from "@/types/champion";
+import type { ChampionWithSkin } from "@/types/champion";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export const ChampionColumns: ColumnDef<ChampionWithSkin>[] = [
