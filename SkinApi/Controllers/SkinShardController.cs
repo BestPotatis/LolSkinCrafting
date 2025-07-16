@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SkinApi.Data;
 using SkinApi.DTOs;
+using SkinApi.Models;
 
 namespace SkinApi.Controllers;
 
@@ -35,5 +36,26 @@ public class SkinShardController : ControllerBase
             });
         }
         return Ok(skinShardsHasSkin);
+    }
+
+    [HttpPost]
+    [Route("create")]
+    public async Task<IActionResult> Store(CreateSkinShardDTO request)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var newSkinShard = new SkinShard
+        {
+            Name = request.Name,
+            Legacy = request.Legacy,
+            ChampionId = request.ChampionId!.Value,
+            Rarity = request.Rarity!.Value,
+            DisenchantPrice = request.DisenchantPrice!.Value,
+            Price = request.Price!.Value
+        };
+        _context.SkinShards.Add(newSkinShard);
+        return Ok(await _context.SaveChangesAsync());
     }
 }

@@ -12,6 +12,6 @@ public record CreateSkinDTO
     [Required]
     public RarityEnum? Rarity { get; set; }
 
-    [Required, Range(1, 200)]
+    [Required]
     public int? ChampionId { get; set; }
 }
