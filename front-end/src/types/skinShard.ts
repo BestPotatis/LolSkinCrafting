@@ -10,3 +10,12 @@ export interface SkinShardHasSkin {
     hasSkin: boolean;
     bestSkinRarity: Rarity;
 }
+
+export interface CreateSkinShard {
+    name: string;
+    championId: number;
+    rarity: number;
+    legacy: boolean;
+    disenchantPrice: number;
+    price: number;
+}

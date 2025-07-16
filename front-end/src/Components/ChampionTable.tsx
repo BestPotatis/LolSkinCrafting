@@ -18,25 +18,19 @@ import { useForm } from "react-hook-form";
 import { CreateSkinForm } from "./Forms/CreateSkinForm";
 import { useMemo, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import type { ValueMap } from "@/types/general";
 
-export function ChampionTable() {
+interface ChampionTableProps {
+  championData: ChampionWithSkin[] | undefined;
+  championOptions: ValueMap[] | undefined;
+}
+
+export function ChampionTable({
+  championData,
+  championOptions,
+}: ChampionTableProps) {
   const queryClient = useQueryClient();
   const columns = ChampionColumns;
-  const { data: championData } = useQuery({
-    queryKey: ["champions"],
-    queryFn: (): Promise<ChampionWithSkin[]> =>
-      axios.get(BASE_URL + "/champions").then((res) => res.data),
-  });
-
-  const championOptions = useMemo(
-    () =>
-      championData?.map((champion) => ({
-        value: String(champion.id),
-        label: champion.name,
-      })),
-    [championData]
-  );
-
   const successToast = () =>
     toast.success("Successfully created skin", { position: "bottom-right" });
   const addSkinMutation = useMutation({

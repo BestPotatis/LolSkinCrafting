@@ -1,27 +1,26 @@
 import { Controller, type UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
-import type { CreateSkin } from "@/types/champion";
-import { Combobox } from "../ui/combobox";
+import type { CreateSkinShard } from "@/types/skinShard";
 import type { ValueMap } from "@/types/general";
+import { Combobox } from "../ui/combobox";
+import { RARITY_OPTIONS } from "@/constants";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
-import { RARITY_OPTIONS } from "@/constants";
 
-interface CreateSkinFormProps {
+interface CreateSkinShardFormProps {
   championOptions: ValueMap[];
-  submitForm: UseFormReturn<CreateSkin, any, CreateSkin>;
+  submitForm: UseFormReturn<CreateSkinShard, any, CreateSkinShard>;
 }
-export function CreateSkinForm({
+export function CreateSkinShardForm({
   championOptions,
   submitForm,
-}: CreateSkinFormProps) {
+}: CreateSkinShardFormProps) {
   const { register, control } = submitForm;
-
   return (
     <>
       <Input
-        placeholder="Skin name"
         {...register("name", { required: true })}
+        placeholder="Skin shard name"
       />
       <Controller
         name="rarity"
@@ -37,6 +36,12 @@ export function CreateSkinForm({
           );
         }}
       />
+      <Input
+        {...register("disenchantPrice", { required: true })}
+        placeholder="Disenchant price"
+      />
+      <Input {...register("price", { required: true })} placeholder="Price" />
+
       <Controller
         name="championId"
         control={control}
