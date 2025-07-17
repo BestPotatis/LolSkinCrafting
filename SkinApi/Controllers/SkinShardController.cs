@@ -25,6 +25,7 @@ public class SkinShardController : ControllerBase
         {
             skinShardsHasSkin.Add(new SkinShardDTO
             {
+                Id = skinShard.Id,
                 Name = skinShard.Name,
                 Champion = skinShard.Champion.Name,
                 Rarity = skinShard.Rarity,
@@ -58,4 +59,14 @@ public class SkinShardController : ControllerBase
         _context.SkinShards.Add(newSkinShard);
         return Ok(await _context.SaveChangesAsync());
     }
+
+    [HttpDelete]
+    [Route("delete/{skinShardId}")]
+    public async Task<IActionResult> Destroy(int skinShardId)
+    {
+        var skinShard = await _context.SkinShards.Where(s => s.Id == skinShardId).FirstAsync();
+        _context.SkinShards.Remove(skinShard);
+        return Ok(await _context.SaveChangesAsync());
+    }
+
 }
