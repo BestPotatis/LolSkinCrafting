@@ -9,7 +9,7 @@ import { CreateSkinShardForm } from "./Forms/CreateSkinShardForm";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { ValueMap } from "@/types/general";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface SkinShardTableProps {
   championOptions: ValueMap[] | undefined;
@@ -66,7 +66,6 @@ export function SkinShardTable({ championOptions }: SkinShardTableProps) {
           )
         }
       />
-      <ToastContainer />
     </>
   );
 }

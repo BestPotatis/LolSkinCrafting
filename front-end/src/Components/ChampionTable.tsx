@@ -8,7 +8,7 @@ import { FormDialog } from "./FormDialog";
 import { useForm } from "react-hook-form";
 import { CreateSkinForm } from "./Forms/CreateSkinForm";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import type { ValueMap } from "@/types/general";
 
 interface ChampionTableProps {
@@ -65,8 +65,6 @@ export function ChampionTable({
         data={championData}
         columns={columns}
       />
-
-      <ToastContainer />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Overview from "./Pages/Overview";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const queryClient = new QueryClient();
@@ -7,6 +8,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Overview />
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
