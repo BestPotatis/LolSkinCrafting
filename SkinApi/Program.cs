@@ -31,6 +31,8 @@ app.UseCors(options =>
     }
 );
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 
 var summaries = new[]
 {
