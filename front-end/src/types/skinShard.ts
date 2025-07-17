@@ -1,6 +1,7 @@
 import type { Rarity } from "./champion";
 
 export interface SkinShardHasSkin {
+    id: number;
     name: string;
     champion: string;
     rarity: Rarity;
