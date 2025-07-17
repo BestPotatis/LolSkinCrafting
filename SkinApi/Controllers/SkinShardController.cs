@@ -28,6 +28,7 @@ public class SkinShardController : ControllerBase
                 Id = skinShard.Id,
                 Name = skinShard.Name,
                 Champion = skinShard.Champion.Name,
+                ChampionId = skinShard.ChampionId,
                 Rarity = skinShard.Rarity,
                 Legacy = skinShard.Legacy,
                 DisenchantPrice = skinShard.DisenchantPrice,
@@ -43,10 +44,7 @@ public class SkinShardController : ControllerBase
     [Route("create")]
     public async Task<IActionResult> Store(CreateSkinShardDTO request)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        if (!ModelState.IsValid) return BadRequest(ModelState);
         var newSkinShard = new SkinShard
         {
             Name = request.Name,
@@ -57,6 +55,22 @@ public class SkinShardController : ControllerBase
             Price = request.Price!.Value
         };
         _context.SkinShards.Add(newSkinShard);
+        return Ok(await _context.SaveChangesAsync());
+    }
+
+    [HttpPut]
+    [Route("update/{skinShardId}")]
+    public async Task<IActionResult> Update(int skinShardId, UpdateSkinShardDTO request)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        var skinShard = await _context.SkinShards.Where(s => s.Id == skinShardId).FirstAsync();
+        if (skinShard is null) return NotFound();
+        skinShard.Name = request.Name;
+        skinShard.Rarity = request.Rarity;
+        skinShard.Legacy = request.Legacy;
+        skinShard.DisenchantPrice = request.DisenchantPrice!.Value;
+        skinShard.Price = request.Price!.Value;
+        skinShard.ChampionId = request.ChampionId!.Value;
         return Ok(await _context.SaveChangesAsync());
     }
 

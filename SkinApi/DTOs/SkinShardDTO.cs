@@ -6,6 +6,7 @@ public record SkinShardDTO
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public int ChampionId { get; set; }
     public string Champion { get; set; }
     public RarityEnum Rarity { get; set; }
     public bool Legacy { get; set; }
