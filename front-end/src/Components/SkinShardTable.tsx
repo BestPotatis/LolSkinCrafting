@@ -8,13 +8,9 @@ import { FormDialog } from "./FormDialog";
 import { CreateSkinShardForm } from "./Forms/CreateSkinShardForm";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import type { ValueMap } from "@/types/general";
 import { toast } from "react-toastify";
 
-interface SkinShardTableProps {
-  championOptions: ValueMap[] | undefined;
-}
-export function SkinShardTable({ championOptions }: SkinShardTableProps) {
+export function SkinShardTable() {
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ["skinShards"],
@@ -47,23 +43,16 @@ export function SkinShardTable({ championOptions }: SkinShardTableProps) {
         columns={SkinShardColumns}
         data={data}
         tableButtons={
-          championOptions && (
-            <FormDialog
-              buttonText="Add skin shard"
-              title="Add skin shard"
-              description="Add a skin shard for a champion"
-              dialogForm={
-                <CreateSkinShardForm
-                  championOptions={championOptions}
-                  submitForm={submitForm}
-                />
-              }
-              open={open}
-              setOpen={setOpen}
-              submitFn={(data) => createSkinShardMutation.mutate(data)}
-              submitForm={submitForm}
-            />
-          )
+          <FormDialog
+            buttonText="Add skin shard"
+            title="Add skin shard"
+            description="Add a skin shard for a champion"
+            dialogForm={<CreateSkinShardForm submitForm={submitForm} />}
+            open={open}
+            setOpen={setOpen}
+            submitFn={(data) => createSkinShardMutation.mutate(data)}
+            submitForm={submitForm}
+          />
         }
       />
     </>

@@ -2,20 +2,18 @@ import { Controller, type UseFormReturn } from "react-hook-form";
 import { Input } from "../ui/input";
 import type { CreateSkin } from "@/types/champion";
 import { Combobox } from "../ui/combobox";
-import type { ValueMap } from "@/types/general";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { RARITY_OPTIONS } from "@/constants";
+import { useContext } from "react";
+import { ChampionOptionsContext } from "../Contexts/ChampionOptionsContext";
 
 interface CreateSkinFormProps {
-  championOptions: ValueMap[];
   submitForm: UseFormReturn<CreateSkin, any, CreateSkin>;
 }
-export function CreateSkinForm({
-  championOptions,
-  submitForm,
-}: CreateSkinFormProps) {
+export function CreateSkinForm({ submitForm }: CreateSkinFormProps) {
   const { register, control } = submitForm;
+  const championOptions = useContext(ChampionOptionsContext);
 
   return (
     <>

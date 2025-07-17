@@ -1,4 +1,5 @@
 import { ChampionTable } from "@/Components/ChampionTable";
+import { ChampionOptionsContext } from "@/Components/Contexts/ChampionOptionsContext";
 import { SkinShardTable } from "@/Components/SkinShardTable";
 import { BASE_URL } from "@/constants";
 import type { ChampionWithSkin } from "@/types/champion";
@@ -24,11 +25,12 @@ const Overview = () => {
 
   return (
     <div className="flex justify-between p-4">
-      <ChampionTable
-        championData={championData}
-        championOptions={championOptions}
-      />
-      <SkinShardTable championOptions={championOptions} />
+      {championOptions && (
+        <ChampionOptionsContext value={championOptions}>
+          <ChampionTable championData={championData} />
+          <SkinShardTable />
+        </ChampionOptionsContext>
+      )}
     </div>
   );
 };

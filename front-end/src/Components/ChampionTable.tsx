@@ -9,17 +9,12 @@ import { useForm } from "react-hook-form";
 import { CreateSkinForm } from "./Forms/CreateSkinForm";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import type { ValueMap } from "@/types/general";
 
 interface ChampionTableProps {
   championData: ChampionWithSkin[] | undefined;
-  championOptions: ValueMap[] | undefined;
 }
 
-export function ChampionTable({
-  championData,
-  championOptions,
-}: ChampionTableProps) {
+export function ChampionTable({ championData }: ChampionTableProps) {
   const queryClient = useQueryClient();
   const columns = ChampionColumns;
   const successToast = () =>
@@ -43,24 +38,17 @@ export function ChampionTable({
       <DataTable
         title="Champions"
         tableButtons={
-          championOptions && (
-            <FormDialog
-              open={open}
-              setOpen={setOpen}
-              buttonText="Add Skin"
-              dialogForm={
-                <CreateSkinForm
-                  championOptions={championOptions}
-                  submitForm={submitForm}
-                />
-              }
-              title="Add new skin"
-              description="Add a new skin for a champion with name and rarity"
-              submitForm={submitForm}
-              submitText="Add skin"
-              submitFn={(data) => addSkinMutation.mutate(data)}
-            />
-          )
+          <FormDialog
+            open={open}
+            setOpen={setOpen}
+            buttonText="Add Skin"
+            dialogForm={<CreateSkinForm submitForm={submitForm} />}
+            title="Add new skin"
+            description="Add a new skin for a champion with name and rarity"
+            submitForm={submitForm}
+            submitText="Add skin"
+            submitFn={(data) => addSkinMutation.mutate(data)}
+          />
         }
         data={championData}
         columns={columns}
