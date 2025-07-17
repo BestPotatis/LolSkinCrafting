@@ -1,4 +1,4 @@
 export interface ValueMap {
-    value: string;
+    value: number;
     label: string;
 }

@@ -17,7 +17,7 @@ const Overview = () => {
   const championOptions = useMemo(
     () =>
       championData?.map((champion) => ({
-        value: String(champion.id),
+        value: champion.id,
         label: champion.name,
       })),
     [championData]

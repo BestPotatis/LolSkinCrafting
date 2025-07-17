@@ -4,6 +4,7 @@ export interface SkinShardHasSkin {
     id: number;
     name: string;
     champion: string;
+    championId: number;
     rarity: Rarity;
     legacy: boolean;
     disenchantPrice: number;

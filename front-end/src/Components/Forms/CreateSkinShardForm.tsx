@@ -43,14 +43,16 @@ export function CreateSkinShardForm({ submitForm }: CreateSkinShardFormProps) {
       <Controller
         name="championId"
         control={control}
-        render={({ field }) => (
-          <Combobox
-            value={field.value}
-            setValue={field.onChange}
-            options={championOptions}
-            placeholder="Select champion"
-          />
-        )}
+        render={({ field }) => {
+          return (
+            <Combobox
+              value={field.value}
+              setValue={field.onChange}
+              options={championOptions}
+              placeholder="Select champion"
+            />
+          );
+        }}
       />
       <div className="pl-2 flex items-center space-x-2">
         <Controller
