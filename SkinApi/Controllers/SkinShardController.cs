@@ -94,4 +94,14 @@ public class SkinShardController : ControllerBase
         return Ok(await _context.SaveChangesAsync());
     }
 
+    [HttpPost]
+    [Route("delete-multiple")]
+    public async Task<IActionResult> DeleteMultiple(DeleteMultipleSkinShardsDTO request)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        var skinShards = await _context.SkinShards.Where(s => request.Ids.Contains(s.Id)).ToListAsync();
+        _context.SkinShards.RemoveRange(skinShards);
+        return Ok(await _context.SaveChangesAsync());
+    }
+
 }
