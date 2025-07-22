@@ -1,4 +1,4 @@
-import { DeleteDialog } from "@/Components/DeleteDialog";
+import { ConfirmDialog } from "@/Components/ConfirmDialog";
 import { FormDialog } from "@/Components/FormDialog";
 import { CreateSkinShardForm } from "@/Components/Forms/CreateSkinShardForm";
 import { BASE_URL, RARITY_OPTIONS } from "@/constants";
@@ -12,10 +12,6 @@ import { toast } from "react-toastify";
 
 interface UpdateButtonProps {
   skinShard: SkinShardHasSkin;
-}
-interface DeleteButtonProps {
-  id: number;
-  name: string;
 }
 function UpdateButton({ skinShard }: UpdateButtonProps) {
   const queryClient = useQueryClient();
@@ -54,11 +50,15 @@ function UpdateButton({ skinShard }: UpdateButtonProps) {
   );
 }
 
+interface DeleteButtonProps {
+  id: number;
+  name: string;
+}
 function DeleteButton({ id, name }: DeleteButtonProps) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const successToast = () =>
-    toast.success("Delete skin shard successfully", {
+    toast.success("Deleted skin shard successfully", {
       position: "bottom-right",
     });
   const deleteMutation = useMutation({
@@ -70,12 +70,43 @@ function DeleteButton({ id, name }: DeleteButtonProps) {
     },
   });
   return (
-    <DeleteDialog
+    <ConfirmDialog
       open={open}
       setOpen={setOpen}
       buttonText="Delete"
       dataName={name}
-      deleteFn={() => deleteMutation.mutate()}
+      mutateFn={() => deleteMutation.mutate()}
+    />
+  );
+}
+
+interface UpgradeButtonProps {
+  id: number;
+  name: string;
+}
+function UpgradeButton({ id, name }: UpgradeButtonProps) {
+  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const successToast = () =>
+    toast.success("Upgraded skin shard successfully", {
+      position: "bottom-right",
+    });
+  const upgradeMutation = useMutation({
+    mutationFn: () => axios.post(BASE_URL + "/skin-shards/upgrade/" + id),
+    onSuccess: () => {
+      setOpen(false);
+      successToast();
+      queryClient.invalidateQueries({ queryKey: ["skinShards"] });
+      queryClient.invalidateQueries({ queryKey: ["champions"] });
+    },
+  });
+  return (
+    <ConfirmDialog
+      open={open}
+      setOpen={setOpen}
+      buttonText="Upgrade"
+      dataName={name}
+      mutateFn={() => upgradeMutation.mutate()}
     />
   );
 }
@@ -89,6 +120,12 @@ export const SkinShardColumns: ColumnDef<SkinShardHasSkin>[] = [
   { header: "Price", accessorKey: "price" },
   { header: "Champion has skin", accessorKey: "hasSkin" },
   { header: "Best skin rarity", accessorKey: "bestSkinRarity" },
+  {
+    header: "Upgrade",
+    cell: ({ row }) => (
+      <UpgradeButton id={row.original.id} name={row.original.name} />
+    ),
+  },
   {
     header: "Update",
     cell: ({ row }) => <UpdateButton skinShard={row.original} />,
