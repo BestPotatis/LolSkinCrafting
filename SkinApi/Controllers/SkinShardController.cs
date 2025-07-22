@@ -83,4 +83,15 @@ public class SkinShardController : ControllerBase
         return Ok(await _context.SaveChangesAsync());
     }
 
+    [HttpPost]
+    [Route("upgrade/{skinShardId}")]
+    public async Task<IActionResult> Upgrade(int skinShardId)
+    {
+        var skinShard = await _context.SkinShards.Where(s => s.Id == skinShardId).FirstAsync();
+        var newSkin = new Skin { Name = skinShard.Name, ChampionId = skinShard.ChampionId, Legacy = skinShard.Legacy, Rarity = skinShard.Rarity };
+        _context.Skins.Add(newSkin);
+        _context.SkinShards.Remove(skinShard);
+        return Ok(await _context.SaveChangesAsync());
+    }
+
 }
