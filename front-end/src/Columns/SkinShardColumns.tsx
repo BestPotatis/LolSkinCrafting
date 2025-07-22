@@ -1,6 +1,7 @@
 import { ConfirmDialog } from "@/Components/ConfirmDialog";
 import { FormDialog } from "@/Components/FormDialog";
 import { CreateSkinShardForm } from "@/Components/Forms/CreateSkinShardForm";
+import { Checkbox } from "@/Components/ui/checkbox";
 import { BASE_URL, RARITY_OPTIONS } from "@/constants";
 import type { CreateSkinShard, SkinShardHasSkin } from "@/types/skinShard";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -103,6 +104,28 @@ function UpgradeButton({ id, name }: UpgradeButtonProps) {
 }
 
 export const SkinShardColumns: ColumnDef<SkinShardHasSkin>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        className="flex items-center justify-center"
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        className="flex items-center justify-center"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+  },
   { header: "Skin name", accessorKey: "name" },
   { header: "Champion", accessorKey: "champion" },
   { header: "Rarity", accessorKey: "rarity" },
