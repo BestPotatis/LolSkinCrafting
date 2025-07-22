@@ -10,20 +10,20 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 
-interface DeleteDialogProps {
+interface ConfirmDialogProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   buttonText: string;
   dataName: string;
-  deleteFn: () => void;
+  mutateFn: () => void;
 }
-export function DeleteDialog({
+export function ConfirmDialog({
   open,
   setOpen,
   buttonText,
   dataName,
-  deleteFn,
-}: DeleteDialogProps) {
+  mutateFn,
+}: ConfirmDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -31,14 +31,16 @@ export function DeleteDialog({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you sure you want to delete?</DialogTitle>
-          <DialogDescription>You are deleting {dataName}</DialogDescription>
+          <DialogTitle>
+            Are you sure you want to {buttonText.toLowerCase()}?
+          </DialogTitle>
+          <DialogDescription>Confirm for {dataName}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Cancel</Button>
           </DialogClose>
-          <Button onClick={deleteFn}>Delete</Button>
+          <Button onClick={mutateFn}>{buttonText}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
