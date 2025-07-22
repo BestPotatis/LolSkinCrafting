@@ -12,25 +12,38 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import type { JSX } from "react";
+import { useImperativeHandle, type JSX, type Ref } from "react";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { id: number }, TValue> {
   title: string;
   tableButtons?: JSX.Element;
   columns: ColumnDef<TData, TValue>[];
   data?: TData[];
+  ref?: Ref<unknown>;
 }
 
-function DataTable<TData, TValue>({
+function DataTable<TData extends { id: number }, TValue>({
   title,
   tableButtons,
   columns,
   data,
+  ref,
 }: DataTableProps<TData, TValue>) {
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        table,
+      };
+    },
+    []
+  );
   const table = useReactTable({
     data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
+    enableRowSelection: true,
+    getRowId: (row) => String(row.id),
   });
 
   return (
