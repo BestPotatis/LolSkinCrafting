@@ -16,10 +16,7 @@ interface UpdateButtonProps {
 function UpdateButton({ skinShard }: UpdateButtonProps) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const successToast = () =>
-    toast.success("Update skin shard successfully", {
-      position: "bottom-right",
-    });
+  const successToast = () => toast.success("Update skin shard successfully");
   const updateMutation = useMutation({
     mutationFn: (data: CreateSkinShard) =>
       axios.put(BASE_URL + "/skin-shards/update/" + skinShard.id, data),
@@ -57,10 +54,7 @@ interface DeleteButtonProps {
 function DeleteButton({ id, name }: DeleteButtonProps) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const successToast = () =>
-    toast.success("Deleted skin shard successfully", {
-      position: "bottom-right",
-    });
+  const successToast = () => toast.success("Deleted skin shard successfully");
   const deleteMutation = useMutation({
     mutationFn: () => axios.delete(BASE_URL + "/skin-shards/delete/" + id),
     onSuccess: () => {
@@ -87,10 +81,7 @@ interface UpgradeButtonProps {
 function UpgradeButton({ id, name }: UpgradeButtonProps) {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const successToast = () =>
-    toast.success("Upgraded skin shard successfully", {
-      position: "bottom-right",
-    });
+  const successToast = () => toast.success("Upgraded skin shard successfully");
   const upgradeMutation = useMutation({
     mutationFn: () => axios.post(BASE_URL + "/skin-shards/upgrade/" + id),
     onSuccess: () => {

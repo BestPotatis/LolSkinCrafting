@@ -21,10 +21,7 @@ export function SkinShardTable() {
   const submitForm = useForm<CreateSkinShard>();
   const [open, setOpen] = useState(false);
 
-  const successToast = () =>
-    toast.success("Successfully created skin shard", {
-      position: "bottom-right",
-    });
+  const successToast = () => toast.success("Successfully created skin shard");
 
   const createSkinShardMutation = useMutation({
     mutationFn: (data: CreateSkinShard) =>

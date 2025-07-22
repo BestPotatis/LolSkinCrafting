@@ -17,8 +17,7 @@ interface ChampionTableProps {
 export function ChampionTable({ championData }: ChampionTableProps) {
   const queryClient = useQueryClient();
   const columns = ChampionColumns;
-  const successToast = () =>
-    toast.success("Successfully created skin", { position: "bottom-right" });
+  const successToast = () => toast.success("Successfully created skin");
   const addSkinMutation = useMutation({
     mutationFn: (data: CreateSkin) =>
       axios.post(BASE_URL + "/skins/create", data),

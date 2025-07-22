@@ -8,7 +8,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Overview />
-      <ToastContainer />
+      <ToastContainer position="bottom-right" />
     </QueryClientProvider>
   );
 }
